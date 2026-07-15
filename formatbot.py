@@ -2,6 +2,7 @@ import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.methods import SendRichMessage
+from aiogram.types import InlineQueryResultArticle, InputRichMessageContent
 
 import os
 from dotenv import load_dotenv
@@ -16,12 +17,12 @@ async def cmd_start(message: types.Message):
     rich_payload = {
         "chat_id": message.chat.id,
         "rich_message": {
-        "blocks": [{
+            "blocks": [{
                 "type": "heading",
                 "level": 1,
-                "size": 1, # smaller the size bigger the text
+                "size": 1,  # smaller the size bigger the text
                 "text": "Hi! I format everything you send me."
-        }]
+            }]
         }
     }
     method = SendRichMessage(**rich_payload)
@@ -33,13 +34,35 @@ async def echo_message(message: types.Message):
     rich_payload = {
         "chat_id": message.chat.id,
         "rich_message": {
-            "level": 1, 
+            "level": 1,
             "size": 10,
             "markdown": message.text
         }
     }
     method = SendRichMessage(**rich_payload)
     await bot.session.make_request(bot, method)
+
+@dp.inline_query()
+async def inline_echo(inline_query: types.InlineQuery):
+    inline_query.query
+    
+    rich_content = InputRichMessageContent(
+        rich_message={
+            "level": 1,
+            "size": 10,
+            "markdown": inline_query.query
+        }
+    )
+    
+    result = InlineQueryResultArticle(
+        id="1",
+        title=f"📝 {inline_query.query[:30]}...",
+        description="Send with rich formatting",
+        input_message_content=rich_content,
+        thumbnail_url=None
+    )
+    
+    await inline_query.answer([result], cache_time=1)
 
 async def main():
     await dp.start_polling(bot)
