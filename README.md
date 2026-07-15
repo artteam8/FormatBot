@@ -4,3 +4,5 @@ However, bots support formatting even when their owner doesn't have Premium. Thi
 
 An example: 
 \forall \varepsilon > 0 \\; \exists \delta(\varepsilon) > 0: \forall x \in B_{\delta}(x_0): |f(x) - f(x_0)| < \varepsilon -> $\forall \varepsilon > 0 \\; \exists \delta(\varepsilon) > 0: \forall x \in B_{\delta}(x_0): |f(x) - f(x_0)| < \varepsilon$
+
+t.me/gnrgnrseluwuvns_bot - try here, probably is not running, so host it yourself.
